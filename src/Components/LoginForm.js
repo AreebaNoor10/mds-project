@@ -32,15 +32,8 @@ export default function LoginForm(){
   const [loginLoading, setLoginLoading] = useState(false);
   const [forgotLoading, setForgotLoading] = useState(false);
   const [resetLoading, setResetLoading] = useState(false);
-  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isClient) return;
-    
     // Check if we have token and email in URL params
     const token = searchParams.get('token');
     const email = searchParams.get('email');
@@ -49,7 +42,7 @@ export default function LoginForm(){
       setResetEmail(email);
       setResetPasswordOpen(true);
     }
-  }, [searchParams, isClient]);
+  }, [searchParams]);
 
   const validateForm = () => {
     let isValid = true;
@@ -249,10 +242,6 @@ export default function LoginForm(){
       setResetLoading(false);
     }
   };
-
-  if (!isClient) {
-    return null; // Return null during server-side rendering
-  }
 
   return(
     <AuthLayout>
